@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -10,10 +11,21 @@ namespace solutions
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine($"Day1, Part1: {await SolveDayOne(useSimpleModel: true)}, Part2: {await SolveDayOne(useSimpleModel: false)}");
-            Console.WriteLine($"Day2, Part1: {await SolveDayTwo()}, Part2: {await SolveDayTwoPartTwo()}");
-            Console.WriteLine($"Day3, Part1: {await SolveDayThree()}, Part2: {await SolveDayThreePartTwo()}");
-            Console.WriteLine($"Day4, Part1: {SolveDayFour()}, Part2: {SolveDayFourPartTwo()}");
+            await SolveDay(async () => Console.WriteLine($"Day1, Part1: {await SolveDayOne(useSimpleModel: true)}, Part2: {await SolveDayOne(useSimpleModel: false)}"));
+            await SolveDay(async () => Console.WriteLine($"Day2, Part1: {await SolveDayTwo()}, Part2: {await SolveDayTwoPartTwo()}"));
+            await SolveDay(async () => Console.WriteLine($"Day3, Part1: {await SolveDayThree()}, Part2: {await SolveDayThreePartTwo()}"));
+            await SolveDay(async () => Console.WriteLine($"Day4, Part1: {SolveDayFour()}, Part2: {SolveDayFourPartTwo()}"));
+        }
+
+        private static async Task SolveDay(Func<Task> action)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            
+            await action();
+            
+            sw.Stop();
+            Console.WriteLine($"Executed in {sw.Elapsed}");
         }
 
         private static async Task<decimal> SolveDayOne(bool useSimpleModel)

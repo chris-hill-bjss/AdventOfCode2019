@@ -7,6 +7,8 @@ namespace solutions
 {
     public class Day4
     {
+        private readonly Regex _regex = new Regex(@"(\d{1})\1", RegexOptions.Compiled);
+
         public IEnumerable<int> FindMatches(int start, int end) =>
             Enumerable
                 .Range(start, end-start)
@@ -14,7 +16,7 @@ namespace solutions
                     string stringified = i.ToString();
                     string sorted = String.Join(String.Empty, stringified.OrderBy(_ => _));
 
-                    return Regex.IsMatch(stringified, @"(\d{1})\1") && stringified == sorted;
+                    return _regex.IsMatch(stringified) && stringified == sorted;
                 });
 
         public IEnumerable<int> FindMatchesStrict(int start, int end) =>
@@ -25,7 +27,7 @@ namespace solutions
                     string sorted = String.Join(String.Empty, stringified.OrderBy(_ => _));
                     
                     return 
-                        Regex.IsMatch(stringified, @"(\d{1})\1")
+                        _regex.IsMatch(stringified)
                         &&
                         sorted.GroupBy(_ => _).Any(grp => grp.Count() == 2)
                         && 
