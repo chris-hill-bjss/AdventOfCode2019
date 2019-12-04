@@ -13,6 +13,7 @@ namespace solutions
             Console.WriteLine($"Day1, Part1: {await SolveDayOne(useSimpleModel: true)}, Part2: {await SolveDayOne(useSimpleModel: false)}");
             Console.WriteLine($"Day2, Part1: {await SolveDayTwo()}, Part2: {await SolveDayTwoPartTwo()}");
             Console.WriteLine($"Day3, Part1: {await SolveDayThree()}, Part2: {await SolveDayThreePartTwo()}");
+            Console.WriteLine($"Day4, Part1: {SolveDayFour()}, Part2: {SolveDayFourPartTwo()}");
         }
 
         private static async Task<decimal> SolveDayOne(bool useSimpleModel)
@@ -68,6 +69,16 @@ namespace solutions
 
             return new Day3().CalculateStepsToIntersection(input);
         }
+
+        private static int SolveDayFour() =>
+            new Day4()
+                .FindMatches(158126, 624574)
+                .Count();
+
+        private static int SolveDayFourPartTwo() =>
+            new Day4()
+                .FindMatchesStrict(158126, 624574)
+                .Count();
 
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
         {
