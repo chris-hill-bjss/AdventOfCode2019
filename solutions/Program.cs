@@ -15,6 +15,7 @@ namespace solutions
             await SolveDay(async () => Console.WriteLine($"Day2, Part1: {await SolveDayTwo()}, Part2: {await SolveDayTwoPartTwo()}"));
             await SolveDay(async () => Console.WriteLine($"Day3, Part1: {await SolveDayThree()}, Part2: {await SolveDayThreePartTwo()}"));
             await SolveDay(async () => Console.WriteLine($"Day4, Part1: {SolveDayFour()}, Part2: {SolveDayFourPartTwo()}"));
+            await SolveDay(async () => Console.WriteLine($"Day4-Fast, Part1: {SolveDayFourFast()}, Part2: {SolveDayFourPartTwoFast()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
@@ -87,10 +88,18 @@ namespace solutions
                 .FindMatches(158126, 624574)
                 .Count();
 
+        private static int SolveDayFourFast() =>
+            new Day4()
+                .FindMatchesFast(158126, 624574);
+
         private static int SolveDayFourPartTwo() =>
             new Day4()
                 .FindMatchesStrict(158126, 624574)
                 .Count();
+
+        private static int SolveDayFourPartTwoFast() =>
+            new Day4()
+                .FindMatchesStrictFast(158126, 624574);
 
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
         {
