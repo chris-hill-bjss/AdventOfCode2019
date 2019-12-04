@@ -12,6 +12,7 @@ namespace solutions
         {
             Console.WriteLine($"Day1, Part1: {await SolveDayOne(useSimpleModel: true)}, Part2: {await SolveDayOne(useSimpleModel: false)}");
             Console.WriteLine($"Day2, Part1: {await SolveDayTwo()}, Part2: {await SolveDayTwoPartTwo()}");
+            Console.WriteLine($"Day3, Part1: {await SolveDayThree()}, Part2: {await SolveDayThreePartTwo()}");
         }
 
         private static async Task<decimal> SolveDayOne(bool useSimpleModel)
@@ -52,6 +53,20 @@ namespace solutions
             }
             
             return "Failed to solve?";
+        }
+
+        private static async Task<int> SolveDayThree() 
+        {
+            string[] input = (await ReadInput<string>(3, Environment.NewLine)).ToArray();
+
+            return new Day3().CalculateClosestIntersection(input);
+        }
+
+        private static async Task<int> SolveDayThreePartTwo() 
+        {
+            string[] input = (await ReadInput<string>(3, Environment.NewLine)).ToArray();
+
+            return new Day3().CalculateStepsToIntersection(input);
         }
 
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
