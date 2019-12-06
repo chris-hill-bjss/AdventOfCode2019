@@ -17,6 +17,7 @@ namespace solutions
             await SolveDay(async () => await Task.Run(() => Console.WriteLine($"Day4, Part1: {SolveDayFour()}, Part2: {SolveDayFourPartTwo()}")));
             await SolveDay(async () => await Task.Run(() => Console.WriteLine($"Day4-Fast, Part1: {SolveDayFourFast()}, Part2: {SolveDayFourPartTwoFast()}")));
             await SolveDay(async () => Console.WriteLine($"Day5, Part1: {await SolveDayFive()}, Part2: {await SolveDayFivePartTwo()}"));
+            await SolveDay(async () => Console.WriteLine($"Day6, Part1: {await SolveDaySix()}, Part2: {await SolveDaySixPartTwo()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
@@ -119,7 +120,19 @@ namespace solutions
             
             return outputs.Last();
         }
+        private static async Task<int> SolveDaySix()
+        {
+            string[] input = (await ReadInput<string>(6, Environment.NewLine)).ToArray(); 
 
+            return new Day6().CalculateTotalOrbits(input);
+        }
+
+        private static async Task<int> SolveDaySixPartTwo()
+        {
+            string[] input = (await ReadInput<string>(6, Environment.NewLine)).ToArray(); 
+
+            return new Day6().CalculateTransfersRequired(input);
+        }
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
         {
             using(var client = new HttpClient())
