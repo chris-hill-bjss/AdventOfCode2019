@@ -14,8 +14,9 @@ namespace solutions
             await SolveDay(async () => Console.WriteLine($"Day1, Part1: {await SolveDayOne(useSimpleModel: true)}, Part2: {await SolveDayOne(useSimpleModel: false)}"));
             await SolveDay(async () => Console.WriteLine($"Day2, Part1: {await SolveDayTwo()}, Part2: {await SolveDayTwoPartTwo()}"));
             await SolveDay(async () => Console.WriteLine($"Day3, Part1: {await SolveDayThree()}, Part2: {await SolveDayThreePartTwo()}"));
-            await SolveDay(async () => Console.WriteLine($"Day4, Part1: {SolveDayFour()}, Part2: {SolveDayFourPartTwo()}"));
-            await SolveDay(async () => Console.WriteLine($"Day4-Fast, Part1: {SolveDayFourFast()}, Part2: {SolveDayFourPartTwoFast()}"));
+            await SolveDay(async () => await Task.Run(() => Console.WriteLine($"Day4, Part1: {SolveDayFour()}, Part2: {SolveDayFourPartTwo()}")));
+            await SolveDay(async () => await Task.Run(() => Console.WriteLine($"Day4-Fast, Part1: {SolveDayFourFast()}, Part2: {SolveDayFourPartTwoFast()}")));
+            await SolveDay(async () => Console.WriteLine($"Day5, Part1: {await SolveDayFive()}, Part2: {await SolveDayFivePartTwo()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
@@ -100,6 +101,24 @@ namespace solutions
         private static int SolveDayFourPartTwoFast() =>
             new Day4()
                 .FindMatchesStrictFast(158126, 624574);
+
+        private static async Task<int> SolveDayFive()
+        {
+            int[] input = (await ReadInput<int>(5, ",")).ToArray();
+
+            var outputs = new Day5(1, input).ProcessIntCode();
+            
+            return outputs.Last();
+        }
+
+        private static async Task<int> SolveDayFivePartTwo()
+        {
+            int[] input = (await ReadInput<int>(5, ",")).ToArray();
+
+            var outputs = new Day5(5, input).ProcessIntCode();
+            
+            return outputs.Last();
+        }
 
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
         {

@@ -7,7 +7,6 @@ namespace solutions
 {
     public class Day3
     {
-        private Point _initialPosition;
         public int CalculateClosestIntersection(string[] wirePaths)
         {
             IEnumerable<(int steps, Point position)>[] wirePositions = MapWirePathsToCircuitBoard(wirePaths);
