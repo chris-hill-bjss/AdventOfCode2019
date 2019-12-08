@@ -21,21 +21,48 @@ namespace solutions
         public IEnumerable<(int output, int[] setting)> ProcessIntCode()
         {
             var results = new List<(int output, int[] setting)>();
-            var phaseSettings = CalculatePhaseSettings();
-
+            var phaseSettings = CalculatePhaseSettings().ToArray();
+            
             foreach(var phaseSetting in phaseSettings)
             {
                 int total = 0;
-                foreach(int phase in phaseSetting)
+                var inputs = new Stack<int>(new[] {0});
+                
+                var amplifierStates = 
+                    phaseSetting
+                        .Select((phase, id) => (
+                            id: id,
+                            phase: phase, 
+                            position: 0, 
+                            program: _program.Select(i => i).ToArray(), 
+                            isComplete: false))
+                        .ToArray();
+
+                var outputs = new List<int>();
+                while(amplifierStates.Any(state => !state.isComplete))
                 {
-                    var outputs = new List<int>();
-                    var inputs = new Stack<int>(new[] {total, phase});
+                    for(int i = 0; i < amplifierStates.Count(); i++)
+                    {  
+                        outputs.Clear();
+                        var amplifier = amplifierStates[i];
 
-                    
-                    ProcessInstruction(_program.Select(i => i).ToArray(), inputs, 0, outputs);
+                        if (amplifier.position == 0)
+                            inputs.Push(amplifier.phase);
 
-                    total = outputs.Sum();
+                        (int[] program, int position, bool isComplete) =
+                            ProcessInstruction(amplifier.program, inputs, amplifier.position, outputs);
+
+                        amplifierStates[i].program = program;
+                        amplifierStates[i].position = position;
+                        amplifierStates[i].isComplete = isComplete;
+
+                        outputs.ForEach(output => {
+                            total = output;
+                            inputs.Push(output);
+                        });
+                    }
                 }
+                
                 results.Add((total, phaseSetting));
             }
 
@@ -51,7 +78,7 @@ namespace solutions
             }
         }
 
-        private void ProcessInstruction(int[] program, Stack<int> inputs, int position, ICollection<int> outputs)
+        private (int[] program, int position, bool isComplete) ProcessInstruction(int[] program, Stack<int> inputs, int position, ICollection<int> outputs)
         {
             Func<int, int, int> add = (a, b) => a + b;
             Func<int, int, int> multiply = (a, b) => a * b;
@@ -63,8 +90,8 @@ namespace solutions
             while (true)
             {
                 string opCode = program[position].ToString().PadLeft(5, '0');
-                if (opCode == "00099")
-                    break;
+                if (opCode == "00099" || opCode == "00003" && inputs.Count == 0)
+                    return (program, position, opCode == "00099");
 
                 try
                 {

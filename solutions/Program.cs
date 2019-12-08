@@ -19,7 +19,7 @@ namespace solutions
             // await SolveDay(async () => Console.WriteLine($"Day5, Part1: {await SolveDayFive()}, Part2: {await SolveDayFivePartTwo()}"));
             // await SolveDay(async () => Console.WriteLine($"Day6, Part1: {await SolveDaySix()}, Part2: {await SolveDaySixPartTwo()}"));
             
-            await SolveDay(async () => Console.WriteLine($"Day7, Part1: {await SolveDaySeven()}")); //, Part2: {await SolveDaySevenPartTwo()}"));
+            await SolveDay(async () => Console.WriteLine($"Day7, Part1: {await SolveDaySeven()}, Part2: {await SolveDaySevenPartTwo()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
@@ -142,6 +142,15 @@ namespace solutions
             int[] input = (await ReadInput<int>(7, ",")).ToArray();
 
             var results = new Day7(input, 0, 5).ProcessIntCode();
+            
+            return results.OrderByDescending(r => r.output).First().output;
+        }
+
+        private static async Task<int> SolveDaySevenPartTwo()
+        {
+            int[] input = (await ReadInput<int>(7, ",")).ToArray();
+
+            var results = new Day7(input, 5, 5).ProcessIntCode();
             
             return results.OrderByDescending(r => r.output).First().output;
         }
