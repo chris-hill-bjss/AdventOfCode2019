@@ -19,8 +19,7 @@ namespace solutions
             // await SolveDay(async () => Console.WriteLine($"Day5, Part1: {await SolveDayFive()}, Part2: {await SolveDayFivePartTwo()}"));
             // await SolveDay(async () => Console.WriteLine($"Day6, Part1: {await SolveDaySix()}, Part2: {await SolveDaySixPartTwo()}"));
             // await SolveDay(async () => Console.WriteLine($"Day7, Part1: {await SolveDaySeven()}, Part2: {await SolveDaySevenPartTwo()}"));
-
-            await SolveDay(async () => Console.WriteLine($"Day8, Part1: {await SolveDayEightPartTwo()}")); //, Part2: {await SolveDaySevenPartTwo()}"));
+            // await SolveDay(async () => Console.WriteLine($"Day8, Part1: {await SolveDayEight()}, Part2: {await SolveDayEightPartTwo()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
