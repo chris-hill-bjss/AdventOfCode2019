@@ -11,13 +11,15 @@ namespace solutions
     {
         static async Task Main(string[] args)
         {
-            await SolveDay(async () => Console.WriteLine($"Day1, Part1: {await SolveDayOne(useSimpleModel: true)}, Part2: {await SolveDayOne(useSimpleModel: false)}"));
-            await SolveDay(async () => Console.WriteLine($"Day2, Part1: {await SolveDayTwo()}, Part2: {await SolveDayTwoPartTwo()}"));
-            await SolveDay(async () => Console.WriteLine($"Day3, Part1: {await SolveDayThree()}, Part2: {await SolveDayThreePartTwo()}"));
-            await SolveDay(async () => await Task.Run(() => Console.WriteLine($"Day4, Part1: {SolveDayFour()}, Part2: {SolveDayFourPartTwo()}")));
-            await SolveDay(async () => await Task.Run(() => Console.WriteLine($"Day4-Fast, Part1: {SolveDayFourFast()}, Part2: {SolveDayFourPartTwoFast()}")));
-            await SolveDay(async () => Console.WriteLine($"Day5, Part1: {await SolveDayFive()}, Part2: {await SolveDayFivePartTwo()}"));
-            await SolveDay(async () => Console.WriteLine($"Day6, Part1: {await SolveDaySix()}, Part2: {await SolveDaySixPartTwo()}"));
+            // await SolveDay(async () => Console.WriteLine($"Day1, Part1: {await SolveDayOne(useSimpleModel: true)}, Part2: {await SolveDayOne(useSimpleModel: false)}"));
+            // await SolveDay(async () => Console.WriteLine($"Day2, Part1: {await SolveDayTwo()}, Part2: {await SolveDayTwoPartTwo()}"));
+            // await SolveDay(async () => Console.WriteLine($"Day3, Part1: {await SolveDayThree()}, Part2: {await SolveDayThreePartTwo()}"));
+            // await SolveDay(async () => await Task.Run(() => Console.WriteLine($"Day4, Part1: {SolveDayFour()}, Part2: {SolveDayFourPartTwo()}")));
+            // await SolveDay(async () => await Task.Run(() => Console.WriteLine($"Day4-Fast, Part1: {SolveDayFourFast()}, Part2: {SolveDayFourPartTwoFast()}")));
+            // await SolveDay(async () => Console.WriteLine($"Day5, Part1: {await SolveDayFive()}, Part2: {await SolveDayFivePartTwo()}"));
+            // await SolveDay(async () => Console.WriteLine($"Day6, Part1: {await SolveDaySix()}, Part2: {await SolveDaySixPartTwo()}"));
+            
+            await SolveDay(async () => Console.WriteLine($"Day7, Part1: {await SolveDaySeven()}")); //, Part2: {await SolveDaySevenPartTwo()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
@@ -120,6 +122,7 @@ namespace solutions
             
             return outputs.Last();
         }
+
         private static async Task<int> SolveDaySix()
         {
             string[] input = (await ReadInput<string>(6, Environment.NewLine)).ToArray(); 
@@ -133,6 +136,16 @@ namespace solutions
 
             return new Day6().CalculateTransfersRequired(input);
         }
+
+        private static async Task<int> SolveDaySeven()
+        {
+            int[] input = (await ReadInput<int>(7, ",")).ToArray();
+
+            var results = new Day7(input, 0, 5).ProcessIntCode();
+            
+            return results.OrderByDescending(r => r.output).First().output;
+        }
+
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
         {
             using(var client = new HttpClient())
