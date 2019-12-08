@@ -18,8 +18,9 @@ namespace solutions
             // await SolveDay(async () => await Task.Run(() => Console.WriteLine($"Day4-Fast, Part1: {SolveDayFourFast()}, Part2: {SolveDayFourPartTwoFast()}")));
             // await SolveDay(async () => Console.WriteLine($"Day5, Part1: {await SolveDayFive()}, Part2: {await SolveDayFivePartTwo()}"));
             // await SolveDay(async () => Console.WriteLine($"Day6, Part1: {await SolveDaySix()}, Part2: {await SolveDaySixPartTwo()}"));
-            
-            await SolveDay(async () => Console.WriteLine($"Day7, Part1: {await SolveDaySeven()}, Part2: {await SolveDaySevenPartTwo()}"));
+            // await SolveDay(async () => Console.WriteLine($"Day7, Part1: {await SolveDaySeven()}, Part2: {await SolveDaySevenPartTwo()}"));
+
+            await SolveDay(async () => Console.WriteLine($"Day8, Part1: {await SolveDayEightPartTwo()}")); //, Part2: {await SolveDaySevenPartTwo()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
@@ -153,6 +154,44 @@ namespace solutions
             var results = new Day7(input, 5, 5).ProcessIntCode();
             
             return results.OrderByDescending(r => r.output).First().output;
+        }
+
+        private static async Task<int> SolveDayEight()
+        {
+            string input = (await ReadInput<string>(8, Environment.NewLine)).First();
+            
+            var layers = new Day8(input, 25, 6).ConvertToLayers().ToArray();
+
+            var layerDetails = 
+                layers
+                    .Select(s => (
+                        zeroes: s.Count(c => c == '0'), 
+                        ones: s.Count(c => c == '1'), 
+                        twos: s.Count(c => c == '2')))
+                    .OrderBy(layer => layer.zeroes);
+            
+            var checksumLayer = layerDetails.First();
+
+            return checksumLayer.ones * checksumLayer.twos;
+        }
+
+        private static async Task<int> SolveDayEightPartTwo()
+        {
+            string input = (await ReadInput<string>(8, Environment.NewLine)).First();
+            
+            char[,] image = new Day8(input, 25, 6).DecodeImage();
+
+            for(int y = 0; y <= image.GetUpperBound(0); y++)
+            {
+                for(int x = 0; x <= image.GetUpperBound(1); x++)
+                {
+                    Console.Write(image[y,x]);
+                }
+
+                Console.WriteLine();
+            }
+
+            return image.Length;
         }
 
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
