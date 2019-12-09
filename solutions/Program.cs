@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace solutions
             // await SolveDay(async () => Console.WriteLine($"Day6, Part1: {await SolveDaySix()}, Part2: {await SolveDaySixPartTwo()}"));
             // await SolveDay(async () => Console.WriteLine($"Day7, Part1: {await SolveDaySeven()}, Part2: {await SolveDaySevenPartTwo()}"));
             // await SolveDay(async () => Console.WriteLine($"Day8, Part1: {await SolveDayEight()}, Part2: {await SolveDayEightPartTwo()}"));
+
+            await SolveDay(async () => Console.WriteLine($"Day9, Part1: {await SolveDayNine()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
@@ -191,6 +194,20 @@ namespace solutions
             }
 
             return image.Length;
+        }
+
+        private static async Task<long> SolveDayNine()
+        {
+            long[] input = (await ReadInput<long>(9, ",")).ToArray();
+
+            var results = new Day9(input).RunProgram();
+            
+            foreach(var output in results)
+            {
+                Console.WriteLine($"{output}");
+            }
+
+            return results.Last();;
         }
 
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
