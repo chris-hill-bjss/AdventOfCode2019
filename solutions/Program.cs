@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
+using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -21,8 +21,10 @@ namespace solutions
             // await SolveDay(async () => Console.WriteLine($"Day6, Part1: {await SolveDaySix()}, Part2: {await SolveDaySixPartTwo()}"));
             // await SolveDay(async () => Console.WriteLine($"Day7, Part1: {await SolveDaySeven()}, Part2: {await SolveDaySevenPartTwo()}"));
             // await SolveDay(async () => Console.WriteLine($"Day8, Part1: {await SolveDayEight()}, Part2: {await SolveDayEightPartTwo()}"));
+            // await SolveDay(async () => Console.WriteLine($"Day9, Part1: {await SolveDayNine()}"));
 
-            await SolveDay(async () => Console.WriteLine($"Day9, Part1: {await SolveDayNine()}"));
+            //await SolveDay(async () => Console.WriteLine($"Day10, Part1: {await SolveDayTen()}"));
+            await SolveDay(async () => Console.WriteLine($"Day10, Part1: {await SolveDayTenPartTwo()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
@@ -208,6 +210,24 @@ namespace solutions
             }
 
             return results.Last();;
+        }
+
+        private static async Task<string> SolveDayTen()
+        {
+            string[] input = (await ReadInput<string>(10, Environment.NewLine)).ToArray();
+
+            var result = new Day10(input).FindBestStationLocation();
+
+            return $"{result.baseLocation}:{result.visibleAsteroids}";
+        }
+
+        private static async Task<string> SolveDayTenPartTwo()
+        {
+            string[] input = (await ReadInput<string>(10, Environment.NewLine)).ToArray();
+
+            new Day10(input).VaporiseAsteroids(new PointF(23,19));
+
+            return $"";
         }
 
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
