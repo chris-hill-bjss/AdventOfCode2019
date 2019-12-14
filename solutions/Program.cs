@@ -24,7 +24,10 @@ namespace solutions
             // await SolveDay(async () => Console.WriteLine($"Day9, Part1: {await SolveDayNine()}"));
 
             //await SolveDay(async () => Console.WriteLine($"Day10, Part1: {await SolveDayTen()}"));
-            await SolveDay(async () => Console.WriteLine($"Day10, Part1: {await SolveDayTenPartTwo()}"));
+            //await SolveDay(async () => Console.WriteLine($"Day10, Part1: {await SolveDayTenPartTwo()}"));
+            //await SolveDay(async () => Console.WriteLine($"Day12, Part1: {await SolveDayTwelve()}"));
+
+            await SolveDay(async () => Console.WriteLine($"Day12, Part2: {await SolveDayTwelvePartTwo()}"));
         }
 
         private static async Task SolveDay(Func<Task> action)
@@ -228,6 +231,22 @@ namespace solutions
             new Day10(input).VaporiseAsteroids(new PointF(23,19));
 
             return $"";
+        }
+
+        private static async Task<string> SolveDayTwelve()
+        {
+            string[] input = (await ReadInput<string>(12, Environment.NewLine)).ToArray();
+
+            new Day12(input).SimulateMovements(1000);
+
+            return $"";
+        }
+
+        private static async Task<double> SolveDayTwelvePartTwo()
+        {
+            string[] input = (await ReadInput<string>(12, Environment.NewLine)).ToArray();
+
+            return new Day12(input).SimulateUntilMatch();
         }
 
         private static async Task<IEnumerable<T>> ReadInput<T>(int day, String separator)
